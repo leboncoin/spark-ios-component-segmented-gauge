@@ -1,32 +1,32 @@
-# ___COMPONENT_NAME___
+# SegmentedGauge
 
 **Spark** is the [Leboncoin](https://www.leboncoin.fr/)'s _Design System_.
 
-The repository here contains only the **iOS ___COMPONENT_NAME___** for _SwiftUI_ and _UIKit_.
+The repository here contains only the **iOS SegmentedGauge** for _SwiftUI_ and _UIKit_.
 
 You can also see all of our Spark iOS repositories on [Github](https://github.com/orgs/leboncoin/repositories?q=spark-ios+sort%3Aname-asc).
 
 ## Specifications
 
-The ___component_name___ specifications is visible on [Zeroheight](TODO).
+The segmented gauge specifications is visible on [Zeroheight](https://zeroheight.com/1186e1705/p/71a76b-segmented-gauge).
 
-![Figma anatomy](https://github.com/leboncoin/___REPOSITORY_NAME___/blob/main/.github/assets/anatomy.png)
+![Figma anatomy](https://github.com/leboncoin/spark-ios-component-segmented-gauge/blob/main/.github/assets/anatomy.png)
 
 ## Technical Documentation
 
-You are a developer ? A technical documentation in _DocC_ is available [here](https://leboncoin.github.io/___REPOSITORY_NAME___/).
+You are a developer ? A technical documentation in _DocC_ is available [here](https://leboncoin.github.io/spark-ios-component-segmented-gauge/).
 
 ### Swift Package Manager
 
-_Note: Instructions below are for using **SPM** without the Xcode UI. It's the easiest to go to your Project Settings -> Swift Packages and add SparkComponent___COMPONENT_NAME___ from there.\_
+_Note: Instructions below are for using **SPM** without the Xcode UI. It's the easiest to go to your Project Settings -> Swift Packages and add SparkComponentSegmentedGauge from there.\_
 
 To integrate using Apple's Swift package manager, without Xcode integration, add the following as a dependency to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/leboncoin/___REPOSITORY_NAME___.git", .upToNextMajor(from: "1.0.0"))
+.package(url: "https://github.com/leboncoin/spark-ios-component-segmented-gauge.git", .upToNextMajor(from: "1.0.0"))
 ```
 
-and then specify `SparkComponent___COMPONENT_NAME___` as a dependency of the Target in which you wish to use the SparkComponent___COMPONENT_NAME___.
+and then specify `SparkComponentSegmentedGauge` as a dependency of the Target in which you wish to use the SparkComponentSegmentedGauge.
 
 Here's an example `Package.swift`:
 
@@ -46,7 +46,7 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/leboncoin/___REPOSITORY_NAME___.git",
+            url: "https://github.com/leboncoin/spark-ios-component-segmented-gauge.git",
             .upToNextMajor(from: "1.0.0")
         )
     ],
@@ -55,8 +55,8 @@ let package = Package(
             name: "MyPackage",
             dependencies: [
                 .product(
-                    name: "SparkComponent___COMPONENT_NAME___",
-                    package: "___REPOSITORY_NAME___"
+                    name: "SparkComponentSegmentedGauge",
+                    package: "spark-ios-component-segmented-gauge"
                 ),
             ]
         )
