@@ -175,7 +175,7 @@ public final class SparkUI___COMPONENT_NAME___: UIView {
             guard let self else { return }
 
             self.backgroundColor(colors.background)
-            
+
             // TODO: If Needed
         }
 
