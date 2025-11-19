@@ -42,7 +42,7 @@ final class SparkSegmentedGaugeSnapshotTests: SwiftUIComponentSnapshotTestCase {
                     .sparkSegmentedGaugeAlignment(configuration.alignment)
                     .sparkSegmentedGaugeSegments(configuration.segments)
                     .sparkSegmentedGaugeSize(configuration.size)
-                    .sparkSegmentedGaugeIsMarker(configuration.isMarker)
+                    .sparkSegmentedGaugeWithMarker(configuration.withMarker)
                     .segmentedGaugeType(configuration.type, theme: self.theme)
                     .frame(width: 300)
                     .padding(.horizontal, scenario.isDocumentation ? 14 : 50)
@@ -141,9 +141,9 @@ final class SparkSegmentedGaugeSnapshotTests: SwiftUIComponentSnapshotTestCase {
         scenario: SegmentedGaugeScenarioSnapshotTests
     ) -> some View {
         self.customLabelStack(scenario: scenario) {
-            Text(forTitle ? "Welcome" : "This is")
+            Text(forTitle ? "Welcome" : "The")
 
-            Text(forTitle ? "on gauge" : "a description")
+            Text(forTitle ? "on gauge" : "description")
                 .font(forTitle ? .body : .footnote)
                 .foregroundStyle(forTitle ? .red : .blue)
         }

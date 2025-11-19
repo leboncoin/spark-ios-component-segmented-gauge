@@ -35,7 +35,7 @@ final class SparkUISegmentedGaugeSnapshotTests: UIKitComponentSnapshotTestCase {
             for configuration in configurations {
                 let segmentedGauge = SparkUISegmentedGauge(theme: self.theme)
                 segmentedGauge.alignment = configuration.alignment
-                segmentedGauge.isMarker = configuration.isMarker
+                segmentedGauge.withMarker = configuration.withMarker
                 segmentedGauge.segments = configuration.segments
                 segmentedGauge.size = configuration.size
                 segmentedGauge.type = configuration.type.toType(self.theme)

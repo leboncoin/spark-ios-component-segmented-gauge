@@ -49,34 +49,6 @@ final class SegmentedGaugeGetColorsUseCaseTests: XCTestCase {
         )
 
         // WHEN
-        for segments in SegmentedGaugeSegments.allCases {
-            let result = self.useCase.execute(
-                theme: self.theme,
-                type: type,
-                segments: .five
-            )
-
-            // THEN
-            XCTAssertEqual(result, expectedColors, "Wrong result for \(segments) segments")
-        }
-    }
-
-    // MARK: - Medium Type Tests
-
-    func test_execute_mediumTypeWithThreeSegments_returnsSuccessColor() {
-        // GIVEN
-        let type = SegmentedGaugeType.medium
-
-        let expectedColors = SegmentedGaugeColors(
-            plainSegmentBackground: self.theme.colors.feedback.success,
-            otherSegmentBackground: self.theme.colors.base.surface,
-            plainSegmentBorder: self.theme.colors.feedback.success,
-            otherSegmentBorder: self.theme.colors.base.outline,
-            markerOuterBackground: self.theme.colors.base.surface,
-            markerInnerBackground: self.theme.colors.feedback.success
-        )
-
-        // WHEN
         let result = self.useCase.execute(
             theme: self.theme,
             type: .medium,

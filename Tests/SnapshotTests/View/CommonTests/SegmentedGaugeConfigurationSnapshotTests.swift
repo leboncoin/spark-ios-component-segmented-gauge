@@ -19,7 +19,7 @@ struct SegmentedGaugeConfigurationSnapshotTests {
     let scenario: SegmentedGaugeScenarioSnapshotTests
 
     var alignment: SegmentedGaugeAlignment = .default
-    var isMarker: Bool = true
+    var withMarker: Bool = true
     var segments: SegmentedGaugeSegments = .default
     var size: SegmentedGaugeSize = .default
     var type: SegmentedGaugeTestingType = .default
@@ -38,7 +38,7 @@ struct SegmentedGaugeConfigurationSnapshotTests {
 
         return [
             "\(self.alignment)" + "Alignment",
-            self.isMarker ? "isMarker" : nil,
+            self.withMarker ? "withMarker" : nil,
             "\(self.segments)" + "Segments",
             "\(self.size)" + "Size",
             "\(self.type)" + "Type",

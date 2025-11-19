@@ -62,7 +62,7 @@ enum SegmentedGaugeScenarioSnapshotTests: String, CaseIterable {
     /// Content:
     ///  - alignment: all
     ///  - content: default
-    ///  - isMarker: default
+    ///  - withMarker: default
     ///  - segments: default
     ///  - size: default
     ///  - type: default
@@ -82,12 +82,12 @@ enum SegmentedGaugeScenarioSnapshotTests: String, CaseIterable {
 
     /// Test 2
     ///
-    /// Description: Test all segments and all isMarker
+    /// Description: Test all segments and all withMarker
     ///
     /// Content:
     ///  - alignment: default
     ///  - content: default
-    ///  - isMarker: all
+    ///  - withMarker: all
     ///  - segments: all
     ///  - size: default
     ///  - type: default
@@ -95,13 +95,13 @@ enum SegmentedGaugeScenarioSnapshotTests: String, CaseIterable {
     ///  - size: default
     private func test2() -> [SegmentedGaugeConfigurationSnapshotTests] {
         let segments = SegmentedGaugeSegments.allCases
-        let isMarkers = Bool.allCases
+        let withMarkers = Bool.allCases
 
         return segments.flatMap { segments in
-            isMarkers.map { isMarker in
+            withMarkers.map { withMarker in
                     .init(
                         scenario: self,
-                        isMarker: isMarker,
+                        withMarker: withMarker,
                         segments: segments
                     )
             }
@@ -115,7 +115,7 @@ enum SegmentedGaugeScenarioSnapshotTests: String, CaseIterable {
     /// Content:
     ///  - alignment: default
     ///  - content: default
-    ///  - isMarker: default
+    ///  - withMarker: default
     ///  - segments: default
     ///  - size: all
     ///  - type: default
@@ -135,12 +135,12 @@ enum SegmentedGaugeScenarioSnapshotTests: String, CaseIterable {
 
     /// Test 4
     ///
-    /// Description: Test all type and isMarker and all modes
+    /// Description: Test all type and withMarker and all modes
     ///
     /// Content:
     ///  - alignment: default
     ///  - content: default
-    ///  - isMarker: true
+    ///  - withMarker: true
     ///  - segments: all
     ///  - size: default
     ///  - type: all
@@ -152,7 +152,7 @@ enum SegmentedGaugeScenarioSnapshotTests: String, CaseIterable {
         return types.map { type in
                 .init(
                     scenario: self,
-                    isMarker: true,
+                    withMarker: true,
                     type: type,
                     modes: Constants.Modes.all
                 )
@@ -161,12 +161,12 @@ enum SegmentedGaugeScenarioSnapshotTests: String, CaseIterable {
 
     /// Test 5
     ///
-    /// Description: Test all segments and all isMarker
+    /// Description: Test all segments and all withMarker
     ///
     /// Content:
     ///  - alignment: default
     ///  - content: all
-    ///  - isMarker: default
+    ///  - withMarker: default
     ///  - segments: default
     ///  - size: default
     ///  - type: default
@@ -196,7 +196,7 @@ enum SegmentedGaugeScenarioSnapshotTests: String, CaseIterable {
         // All content
         items.append(.init(
             scenario: self,
-            isMarker: false,
+            withMarker: false,
             title: .text,
             description: .text,
             documentationName: "all"
@@ -205,7 +205,7 @@ enum SegmentedGaugeScenarioSnapshotTests: String, CaseIterable {
         // All label content
         items.append(.init(
             scenario: self,
-            isMarker: false,
+            withMarker: false,
             title: .other,
             description: .other,
             documentationName: "all_label"
@@ -214,7 +214,7 @@ enum SegmentedGaugeScenarioSnapshotTests: String, CaseIterable {
         // Description only
         items.append(.init(
             scenario: self,
-            isMarker: false,
+            withMarker: false,
             title: .withoutText,
             description: .text,
             documentationName: "description"
@@ -223,7 +223,7 @@ enum SegmentedGaugeScenarioSnapshotTests: String, CaseIterable {
         // Description label only
         items.append(.init(
             scenario: self,
-            isMarker: false,
+            withMarker: false,
             title: .withoutText,
             description: .other,
             documentationName: "description_label"
@@ -233,7 +233,7 @@ enum SegmentedGaugeScenarioSnapshotTests: String, CaseIterable {
         for segments in SegmentedGaugeSegments.allCases {
             items.append(.init(
                 scenario: self,
-                isMarker: false,
+                withMarker: false,
                 segments: segments,
                 documentationName: "segments_\(segments)"
             ))
@@ -251,7 +251,7 @@ enum SegmentedGaugeScenarioSnapshotTests: String, CaseIterable {
         // Marker
         items.append(.init(
             scenario: self,
-            isMarker: true,
+            withMarker: true,
             documentationName: "marker"
         ))
 
