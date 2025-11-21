@@ -28,7 +28,7 @@ import SparkTheming
 ///         )
 ///         .sparkTheme(self.theme)
 ///         .sparkSegmentedGaugeAlignment(.horizontal)
-///         .sparkSegmentedGaugeIsMarker(true)
+///         .sparkSegmentedGaugeWithMarker(true)
 ///         .sparkSegmentedGaugeSegments(.five)
 ///         .sparkSegmentedGaugeSize(.small)
 ///         .sparkSegmentedGaugeType(.high)
@@ -41,10 +41,10 @@ import SparkTheming
 /// This component use some EnvironmentValues :
 /// - **theme** : ``sparkTheme(_:)`` (View extension)
 /// - **segmentedGaugeAlignment** : ``sparkSegmentedGaugeAlignment(_:)`` (View extension)
-/// - **segmentedGaugeIsMarker** : ``sparkSegmentedGaugeIsMarker(_:)`` (View extension)
 /// - **segmentedGaugeSegments** : ``sparkSegmentedGaugeSegments(_:)`` (View extension)
 /// - **segmentedGaugeSize** : ``sparkSegmentedGaugeSize(_:)`` (View extension)
 /// - **segmentedGaugeType** : ``sparkSegmentedGaugeType(_:)`` (View extension)
+/// - **segmentedGaugeWithMarker** : ``sparkSegmentedGaugeWithMarker(_:)`` (View extension)
 ///
 /// > If theses values are not set, default values will be applied.
 ///
@@ -94,10 +94,10 @@ public struct SparkSegmentedGauge<TitleLabel, DescriptionLabel>: View where Titl
 
     @Environment(\.theme) private var theme
     @Environment(\.segmentedGaugeAlignment) private var alignment
-    @Environment(\.segmentedGaugeIsMarker) private var isMarker
     @Environment(\.segmentedGaugeSegments) private var segments
     @Environment(\.segmentedGaugeSize) private var size
     @Environment(\.segmentedGaugeType) private var type
+    @Environment(\.segmentedGaugeWithMarker) private var withMarker
 
     @StateObject private var viewModel = SegmentedGaugeViewModel()
 
@@ -135,7 +135,7 @@ public struct SparkSegmentedGauge<TitleLabel, DescriptionLabel>: View where Titl
     ///             }
     ///         )
     ///         .sparkSegmentedGaugeAlignment(.horizontal)
-    ///         .sparkSegmentedGaugeIsMarker(true)
+    ///         .sparkSegmentedGaugeWithMarker(true)
     ///         .sparkSegmentedGaugeSegments(.five)
     ///         .sparkSegmentedGaugeSize(.small)
     ///         .sparkSegmentedGaugeType(.high)
@@ -196,7 +196,7 @@ public struct SparkSegmentedGauge<TitleLabel, DescriptionLabel>: View where Titl
                             )
 
                             // Is Marker
-                            if self.viewModel.levels.displayMarker(at: index, isMarker: self.isMarker) {
+                            if self.viewModel.levels.displayMarker(at: index, withMarker: self.withMarker) {
 
                                 // Outer
                                 Group {

@@ -36,7 +36,7 @@ final class SegmentedGaugeSegmentUIView: UIView {
         }
     }
 
-    var isMarker: Bool = false {
+    var withMarker: Bool = false {
         didSet {
             self.setVisibilities()
         }
@@ -208,7 +208,7 @@ final class SegmentedGaugeSegmentUIView: UIView {
         )
         self.markerView.isHidden = !self.levels.displayMarker(
             at: self.index,
-            isMarker: self.isMarker
+            withMarker: self.withMarker
         )
 
         // Update Constraints

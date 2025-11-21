@@ -26,7 +26,7 @@ import Combine
 ///     theme: theme
 /// )
 /// segmentedGauge.alignment = .vertical
-/// segmentedGauge.isMarker = false
+/// segmentedGauge.withMarker = false
 /// segmentedGauge.segments = .three
 /// segmentedGauge.size = .small
 /// segmentedGauge.type = .veryLow
@@ -178,10 +178,10 @@ public final class SparkUISegmentedGauge: UIView {
     /// The **default** valie is **true**.
     ///
     /// ![SegmentedGauge rendering.](segmented_gauge_marker.png)
-    public var isMarker: Bool = true {
+    public var withMarker: Bool = true {
         didSet {
             for segmentView in self.segmentsViews {
-                segmentView.isMarker = self.isMarker
+                segmentView.withMarker = self.withMarker
             }
         }
     }
@@ -298,7 +298,7 @@ public final class SparkUISegmentedGauge: UIView {
     ///     theme: theme
     /// )
     /// segmentedGauge.alignment = .vertical
-    /// segmentedGauge.isMarker = false
+    /// segmentedGauge.withMarker = false
     /// segmentedGauge.segments = .three
     /// segmentedGauge.size = .small
     /// segmentedGauge.type = .veryLow
