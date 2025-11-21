@@ -14,5 +14,5 @@ public enum SegmentedGaugeAlignment: CaseIterable {
     // MARK: - Properties
 
     /// The default case. Equals to **.horizontal**.
-    static var `default`: Self = .horizontal
+    public static let `default`: Self = .horizontal
 }

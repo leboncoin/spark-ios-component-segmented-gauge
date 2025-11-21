@@ -46,6 +46,7 @@ final class SegmentedGaugeViewModel: ObservableObject {
         didSet {
             guard oldValue != self.segments, self.alreadyUpdateAll else { return }
 
+            self.setColors()
             self.setLevels()
         }
     }
@@ -126,11 +127,12 @@ final class SegmentedGaugeViewModel: ObservableObject {
     // MARK: - Private Setter
 
     private func setColors() {
-        guard let theme, let type else { return }
+        guard let theme, let type, let segments else { return }
 
         self.colors = self.getColorsUseCase.execute(
             theme: theme,
-            type: type
+            type: type,
+            segments: segments
         )
     }
 

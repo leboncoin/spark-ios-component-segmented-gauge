@@ -147,8 +147,8 @@ final class SegmentedGaugeSegmentMarkerUIView: UIView {
     }
 
     private func setColors() {
-        self.backgroundColor(self.colors.markerInnerBackground)
-        self.innerCircleView.backgroundColor(self.colors.markerOuterBackground)
+        self.backgroundColor(self.colors.markerOuterBackground)
+        self.innerCircleView.backgroundColor(self.colors.markerInnerBackground)
     }
 
     // MARK: - Update UI

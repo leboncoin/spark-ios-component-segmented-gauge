@@ -16,12 +16,13 @@ import SparkTheming
     case low
     case veryLow
     case noData
+    case customDimmed
     case custom
 
     // MARK: - Properties
 
-    /// The default case. Equals to **.medium**.
-    public static var `default`: Self = .veryHigh
+    /// The default case. Equals to **.veryHigh**.
+    public static let `default`: Self = .veryHigh
 
     // MARK: - Methods
 
@@ -33,9 +34,10 @@ import SparkTheming
         case .low: .low
         case .veryLow: .veryLow
         case .noData: .noData
-        case .custom: .custom(
+        case .custom, .customDimmed: .custom(
             level: 1,
-            colorToken: theme.colors.main.main
+            colorToken: theme.colors.main.main,
+            dim: self == .customDimmed ? 0.5 : 1
         )
         }
     }

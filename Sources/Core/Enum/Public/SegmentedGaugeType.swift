@@ -7,6 +7,7 @@
 //
 
 import SparkTheming
+import Foundation
 
 /// The type of the segmented gauge.
 public enum SegmentedGaugeType: Equatable {
@@ -46,12 +47,13 @@ public enum SegmentedGaugeType: Equatable {
     ///   - value: The selected segments level. Relative to ``SegmentedGaugeSegments``.
     ///   If the value is out the range of segment, the limit value will be applied.
     ///   - colorToken: The spark color token.
-    case custom(level: Int, colorToken: any ColorToken)
+    ///   - dim: The spark dim.
+    case custom(level: Int, colorToken: any ColorToken, dim: CGFloat)
 
     // MARK: - Properties
 
     /// The default case. Equals to **.noData**.
-    static var `default`: Self = .noData
+    public static let `default`: Self = .noData
 
     // MARK: - Equatable
 
@@ -63,8 +65,8 @@ public enum SegmentedGaugeType: Equatable {
         case (.low, .low): true
         case (.veryLow, .veryLow): true
         case (.noData, .noData): true
-        case (.custom(let lhsValue, let lhsColorToken), .custom(let rhsValue, let rhsColorToken)):
-            lhsValue == rhsValue && lhsColorToken.equals(rhsColorToken)
+        case (.custom(let lhsValue, let lhsColorToken, let lhsDim), .custom(let rhsValue, let rhsColorToken, let rhsDim)):
+            lhsValue == rhsValue && lhsColorToken.equals(rhsColorToken) && lhsDim == rhsDim
         default: false
         }
     }

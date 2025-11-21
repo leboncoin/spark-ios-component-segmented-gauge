@@ -7,8 +7,10 @@
 //
 
 import XCTest
+import Foundation
 @testable import SparkComponentSegmentedGauge
 @_spi(SI_SPI) import SparkThemingTesting
+import SparkTheming
 
 final class SegmentedGaugeGetColorsUseCaseTests: XCTestCase {
 
@@ -17,200 +19,188 @@ final class SegmentedGaugeGetColorsUseCaseTests: XCTestCase {
     private let useCase = SegmentedGaugeGetColorsUseCase()
     private let theme = ThemeGeneratedMock.mocked()
 
-    // MARK: - Very High Type Tests
+    // MARK: - Tests
 
-    func test_execute_veryHighType_returnsSuccessColor() {
+    func test_execute_withVeryHighOrHighType_returnsSuccessColors() {
         // GIVEN
-        let type = SegmentedGaugeType.veryHigh
-
-        let expectedColors = SegmentedGaugeColors(
-            plainSegmentBackground: self.theme.colors.feedback.success,
-            otherSegmentBackground: self.theme.colors.base.surface,
-            plainSegmentBorder: self.theme.colors.feedback.success,
-            otherSegmentBorder: self.theme.colors.base.outline,
-            markerOuterBackground: self.theme.colors.base.surface,
-            markerInnerBackground: self.theme.colors.feedback.success
+        let types: [SegmentedGaugeType] = [.veryHigh, .high]
+        let expectedColors = self.expectedColors(
+            plainColor: self.theme.colors.feedback.success
         )
 
-        // WHEN
-        let result = self.useCase.execute(
-            theme: self.theme,
-            type: type
-        )
-
-        // THEN
-        XCTAssertEqual(result, expectedColors)
-    }
-
-    // MARK: - High Type Tests
-
-    func test_execute_highType_returnsSuccessColor() {
-        // GIVEN
-        let type = SegmentedGaugeType.high
-
-        let expectedColors = SegmentedGaugeColors(
-            plainSegmentBackground: self.theme.colors.feedback.success,
-            otherSegmentBackground: self.theme.colors.base.surface,
-            plainSegmentBorder: self.theme.colors.feedback.success,
-            otherSegmentBorder: self.theme.colors.base.outline,
-            markerOuterBackground: self.theme.colors.base.surface,
-            markerInnerBackground: self.theme.colors.feedback.success
-        )
-
-        // WHEN
-        let result = self.useCase.execute(
-            theme: self.theme,
-            type: type
-        )
-
-        // THEN
-        XCTAssertEqual(result, expectedColors)
-    }
-
-    // MARK: - Medium Type Tests
-
-    func test_execute_mediumType_returnsNeutralColor() {
-        // GIVEN
-        let type = SegmentedGaugeType.medium
-
-        let expectedColors = SegmentedGaugeColors(
-            plainSegmentBackground: self.theme.colors.feedback.neutral,
-            otherSegmentBackground: self.theme.colors.base.surface,
-            plainSegmentBorder: self.theme.colors.feedback.neutral,
-            otherSegmentBorder: self.theme.colors.base.outline,
-            markerOuterBackground: self.theme.colors.base.surface,
-            markerInnerBackground: self.theme.colors.feedback.neutral
-        )
-
-        // WHEN
-        let result = self.useCase.execute(
-            theme: self.theme,
-            type: type
-        )
-
-        // THEN
-        XCTAssertEqual(result, expectedColors)
-    }
-
-    // MARK: - Low Type Tests
-
-    func test_execute_lowType_returnsAlertColor() {
-        // GIVEN
-        let type = SegmentedGaugeType.low
-
-        let expectedColors = SegmentedGaugeColors(
-            plainSegmentBackground: self.theme.colors.feedback.alert,
-            otherSegmentBackground: self.theme.colors.base.surface,
-            plainSegmentBorder: self.theme.colors.feedback.alert,
-            otherSegmentBorder: self.theme.colors.base.outline,
-            markerOuterBackground: self.theme.colors.base.surface,
-            markerInnerBackground: self.theme.colors.feedback.alert
-        )
-
-        // WHEN
-        let result = self.useCase.execute(
-            theme: self.theme,
-            type: type
-        )
-
-        // THEN
-        XCTAssertEqual(result, expectedColors)
-    }
-
-    // MARK: - Very Low Type Tests
-
-    func test_execute_veryLowType_returnsErrorColor() {
-        // GIVEN
-        let type = SegmentedGaugeType.veryLow
-
-        let expectedColors = SegmentedGaugeColors(
-            plainSegmentBackground: self.theme.colors.feedback.error,
-            otherSegmentBackground: self.theme.colors.base.surface,
-            plainSegmentBorder: self.theme.colors.feedback.error,
-            otherSegmentBorder: self.theme.colors.base.outline,
-            markerOuterBackground: self.theme.colors.base.surface,
-            markerInnerBackground: self.theme.colors.feedback.error
-        )
-
-        // WHEN
-        let result = self.useCase.execute(
-            theme: self.theme,
-            type: type
-        )
-
-        // THEN
-        XCTAssertEqual(result, expectedColors)
-    }
-
-    // MARK: - No Data Type Tests
-
-    func test_execute_noDataType_returnsSurfaceColor() {
-        // GIVEN
-        let type = SegmentedGaugeType.noData
-
-        let expectedColors = SegmentedGaugeColors(
-            plainSegmentBackground: self.theme.colors.base.surface,
-            otherSegmentBackground: self.theme.colors.base.surface,
-            plainSegmentBorder: self.theme.colors.base.surface,
-            otherSegmentBorder: self.theme.colors.base.outline,
-            markerOuterBackground: self.theme.colors.base.surface,
-            markerInnerBackground: self.theme.colors.base.surface
-        )
-
-        // WHEN
-        let result = self.useCase.execute(
-            theme: self.theme,
-            type: type
-        )
-
-        // THEN
-        XCTAssertEqual(result, expectedColors)
-    }
-
-    // MARK: - Custom Type Tests
-
-    func test_execute_customType_returnsCustomColor() {
-        // GIVEN
-        let customColor = ColorTokenGeneratedMock.blue()
-        let type = SegmentedGaugeType.custom(level: 2, colorToken: customColor)
-
-        let expectedColors = SegmentedGaugeColors(
-            plainSegmentBackground: customColor,
-            otherSegmentBackground: self.theme.colors.base.surface,
-            plainSegmentBorder: customColor,
-            otherSegmentBorder: self.theme.colors.base.outline,
-            markerOuterBackground: self.theme.colors.base.surface,
-            markerInnerBackground: customColor
-        )
-
-        // WHEN
-        let result = self.useCase.execute(
-            theme: self.theme,
-            type: type
-        )
-
-        // THEN
-        XCTAssertEqual(result, expectedColors)
-    }
-
-    // MARK: - Common Properties Tests
-
-    func test_execute_allTypes_usesSameOtherSegmentBackground() {
-        // GIVEN
-        let types: [SegmentedGaugeType] = [
-            .veryHigh, .high, .medium, .low, .veryLow, .noData,
-            .custom(level: 3, colorToken: ColorTokenGeneratedMock.blue())
-        ]
-
-        // WHEN / THEN
+        // WHEN - THEN
         for type in types {
+            for segments in SegmentedGaugeSegments.allCases {
+                let result = self.useCase.execute(
+                    theme: self.theme,
+                    type: type,
+                    segments: segments
+                )
+
+                self.assert(result, equals: expectedColors, expectedOpacity: 1)
+            }
+        }
+    }
+
+    func test_execute_withMediumThreeSegments_returnsSuccessColors() {
+        // GIVEN
+        let expectedColors = self.expectedColors(
+            plainColor: self.theme.colors.feedback.success
+        )
+
+        // WHEN
+        let result = self.useCase.execute(
+            theme: self.theme,
+            type: .medium,
+            segments: .three
+        )
+
+        // THEN
+        self.assert(result, equals: expectedColors, expectedOpacity: 1)
+    }
+
+    func test_execute_withMediumFiveSegments_returnsNeutralColors() {
+        // GIVEN
+        let expectedColors = self.expectedColors(
+            plainColor: self.theme.colors.feedback.neutral
+        )
+
+        // WHEN
+        let result = self.useCase.execute(
+            theme: self.theme,
+            type: .medium,
+            segments: .five
+        )
+
+        // THEN
+        self.assert(result, equals: expectedColors, expectedOpacity: 1)
+    }
+
+    func test_execute_withLowType_returnsAlertColors() {
+        // GIVEN
+        let expectedColors = self.expectedColors(
+            plainColor: self.theme.colors.feedback.alert
+        )
+
+        // WHEN - THEN
+        for segments in SegmentedGaugeSegments.allCases {
             let result = self.useCase.execute(
                 theme: self.theme,
-                type: type
+                type: .low,
+                segments: segments
             )
-            XCTAssertTrue(result.otherSegmentBackground.equals(self.theme.colors.base.surface))
-            XCTAssertTrue(result.markerOuterBackground.equals(self.theme.colors.base.surface))
-            XCTAssertTrue(result.otherSegmentBorder.equals(self.theme.colors.base.outline))
+
+            self.assert(result, equals: expectedColors, expectedOpacity: 1)
         }
+    }
+
+    func test_execute_withVeryLowType_returnsErrorColors() {
+        // GIVEN
+        let expectedColors = self.expectedColors(
+            plainColor: self.theme.colors.feedback.error
+        )
+
+        // WHEN - THEN
+        for segments in SegmentedGaugeSegments.allCases {
+            let result = self.useCase.execute(
+                theme: self.theme,
+                type: .veryLow,
+                segments: segments
+            )
+
+            self.assert(result, equals: expectedColors, expectedOpacity: 1)
+        }
+    }
+
+    func test_execute_withNoDataType_returnsSurfaceColors() {
+        // GIVEN
+        let expectedColors = self.expectedColors(
+            plainColor: self.theme.colors.base.surface
+        )
+
+        // WHEN - THEN
+        for segments in SegmentedGaugeSegments.allCases {
+            let result = self.useCase.execute(
+                theme: self.theme,
+                type: .noData,
+                segments: segments
+            )
+
+            self.assert(result, equals: expectedColors, expectedOpacity: 1)
+        }
+    }
+
+    func test_execute_withCustomType_returnsProvidedColor() {
+        // GIVEN
+        let customColor = ColorTokenGeneratedMock.blue()
+        let expectedColors = self.expectedColors(plainColor: customColor)
+        let type = SegmentedGaugeType.custom(
+            level: 2,
+            colorToken: customColor,
+            dim: 0
+        )
+
+        // WHEN
+        let result = self.useCase.execute(
+            theme: self.theme,
+            type: type,
+            segments: .five
+        )
+
+        // THEN
+        self.assert(result, equals: expectedColors, expectedOpacity: 1)
+    }
+
+    func test_execute_withCustomTypeAndPositiveDim_returnsProvidedOpacity() {
+        // GIVEN
+        let customColor = ColorTokenGeneratedMock.orange()
+        let dim: CGFloat = 0.4
+        let expectedColors = self.expectedColors(
+            plainColor: customColor,
+            plainOpacity: dim
+        )
+        let type = SegmentedGaugeType.custom(
+            level: 1,
+            colorToken: customColor,
+            dim: dim
+        )
+
+        // WHEN
+        let result = self.useCase.execute(
+            theme: self.theme,
+            type: type,
+            segments: .three
+        )
+
+        // THEN
+        self.assert(result, equals: expectedColors, expectedOpacity: dim)
+    }
+
+    // MARK: - Helpers
+
+    private func expectedColors(
+        plainColor: any ColorToken,
+        plainOpacity: CGFloat = 1.0
+    ) -> SegmentedGaugeColors {
+        return SegmentedGaugeColors(
+            plainSegmentBackground: plainColor,
+            otherSegmentBackground: self.theme.colors.base.surface,
+            plainSegmentBorder: plainColor,
+            otherSegmentBorder: self.theme.colors.base.outline,
+            markerOuterBackground: plainColor,
+            markerInnerBackground: self.theme.colors.base.surface,
+            plainSegmentOpacity: plainOpacity
+        )
+    }
+
+    private func assert(
+        _ result: SegmentedGaugeColors,
+        equals expectedColors: SegmentedGaugeColors,
+        expectedOpacity: CGFloat,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) {
+        XCTAssertEqual(result, expectedColors, file: file, line: line)
+        XCTAssertEqual(result.plainSegmentOpacity, expectedOpacity, file: file, line: line)
     }
 }
