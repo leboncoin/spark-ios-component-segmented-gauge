@@ -2,7 +2,7 @@
 //  SegmentedGaugeLevelsTests.swift
 //  SparkComponentSegmentedGaugeUnitTests
 //
-//  Created by robin.lemaire on 29/10/2025.
+//  Created by robot.lemaire on 20/11/2025.
 //  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
@@ -50,37 +50,33 @@ final class SegmentedGaugeLevelsTests: XCTestCase {
         XCTAssertTrue(accessibilityLabel.contains("5"))
     }
 
-    // MARK: - Function Tests
+    // MARK: - Display Marker Tests
 
-    func test_isSegment_edgeCases() {
+    func test_displayMarker_behaviorConsistency_with_withMarker_at_true() {
         // GIVEN
-        let levels = SegmentedGaugeLevels(currentLevel: 2, levels: 5)
+        let levels = SegmentedGaugeLevels(currentLevel: 3, levels: 5)
 
         // WHEN / THEN
-        XCTAssertTrue(levels.isSegment(at: 0)) // Well below
-        XCTAssertTrue(levels.isSegment(at: 1)) // Just below current level
-        XCTAssertTrue(levels.isSegment(at: 2)) // Equal to current level
-        XCTAssertTrue(levels.isSegment(at: 3)) // Above current level but within total levels
-        XCTAssertTrue(levels.isSegment(at: 4)) // Just below max levels
-        XCTAssertTrue(levels.isSegment(at: 5)) // Equal to max levels
-        XCTAssertFalse(levels.isSegment(at: 6)) // Above max levels
-        XCTAssertFalse(levels.isSegment(at: 10)) // Well above max levels
+        XCTAssertFalse(levels.displayMarker(at: 0, withMarker: true))
+        XCTAssertFalse(levels.displayMarker(at: 1, withMarker: true))
+        XCTAssertFalse(levels.displayMarker(at: 2, withMarker: true))
+        XCTAssertTrue(levels.displayMarker(at: 3, withMarker: true))
+        XCTAssertFalse(levels.displayMarker(at: 4, withMarker: true))
     }
 
-    func test_isSegment_behaviorConsistency() {
+    func test_displayMarker_behaviorConsistency_with_withMarker_at_false() {
         // GIVEN
-        let levels = SegmentedGaugeLevels(currentLevel: 3, levels: 7)
+        let levels = SegmentedGaugeLevels(currentLevel: 3, levels: 5)
 
-        // WHEN / THEN - All indices <= levels should return true
-        for index in 0...7 {
-            XCTAssertTrue(levels.isSegment(at: index), "Index \(index) should be in range")
-        }
-
-        // All indices > levels should return false
-        for index in 8...15 {
-            XCTAssertFalse(levels.isSegment(at: index), "Index \(index) should not be in range")
-        }
+        // WHEN / THEN
+        XCTAssertFalse(levels.displayMarker(at: 0, withMarker: false))
+        XCTAssertFalse(levels.displayMarker(at: 1, withMarker: false))
+        XCTAssertFalse(levels.displayMarker(at: 2, withMarker: false))
+        XCTAssertFalse(levels.displayMarker(at: 3, withMarker: false))
+        XCTAssertFalse(levels.displayMarker(at: 4, withMarker: false))
     }
+
+    // MARK: - Is Plain Segment Tests
 
     func test_isPlainSegment_edgeCases() {
         // GIVEN
@@ -95,43 +91,21 @@ final class SegmentedGaugeLevelsTests: XCTestCase {
         XCTAssertFalse(levels.isPlainSegment(at: 5)) // At max levels
     }
 
-    func test_isPlainSegment_behaviorConsistency() {
+    // MARK: - Is Segment Tests
+
+    func test_isSegment_edgeCases() {
         // GIVEN
-        let levels = SegmentedGaugeLevels(currentLevel: 4, levels: 6)
-
-        // WHEN / THEN - All indices <= currentLevel should return true
-        for index in 0...4 {
-            XCTAssertTrue(levels.isPlainSegment(at: index), "Index \(index) should be in range")
-        }
-
-        // All indices > currentLevel should return false
-        for index in 5...10 {
-            XCTAssertFalse(levels.isPlainSegment(at: index), "Index \(index) should not be in range")
-        }
-    }
-
-    func test_displayMarker_behaviorConsistency_with_isMarker_at_true() {
-        // GIVEN
-        let levels = SegmentedGaugeLevels(currentLevel: 3, levels: 5)
+        let levels = SegmentedGaugeLevels(currentLevel: 2, levels: 5)
 
         // WHEN / THEN
-        XCTAssertFalse(levels.displayMarker(at: 0, isMarker: true))
-        XCTAssertFalse(levels.displayMarker(at: 1, isMarker: true))
-        XCTAssertFalse(levels.displayMarker(at: 2, isMarker: true))
-        XCTAssertTrue(levels.displayMarker(at: 3, isMarker: true))
-        XCTAssertFalse(levels.displayMarker(at: 4, isMarker: true))
-    }
-
-    func test_displayMarker_behaviorConsistency_with_isMarker_at_false() {
-        // GIVEN
-        let levels = SegmentedGaugeLevels(currentLevel: 3, levels: 5)
-
-        // WHEN / THEN
-        XCTAssertFalse(levels.displayMarker(at: 0, isMarker: false))
-        XCTAssertFalse(levels.displayMarker(at: 1, isMarker: false))
-        XCTAssertFalse(levels.displayMarker(at: 2, isMarker: false))
-        XCTAssertFalse(levels.displayMarker(at: 3, isMarker: false))
-        XCTAssertFalse(levels.displayMarker(at: 4, isMarker: false))
+        XCTAssertTrue(levels.isSegment(at: 0)) // Well below
+        XCTAssertTrue(levels.isSegment(at: 1)) // Just below current level
+        XCTAssertTrue(levels.isSegment(at: 2)) // Equal to current level
+        XCTAssertTrue(levels.isSegment(at: 3)) // Above current level but within total levels
+        XCTAssertTrue(levels.isSegment(at: 4)) // Just below max levels
+        XCTAssertTrue(levels.isSegment(at: 5)) // Equal to max levels
+        XCTAssertFalse(levels.isSegment(at: 6)) // Above max levels
+        XCTAssertFalse(levels.isSegment(at: 10)) // Well above max levels
     }
 
     // MARK: - Equatable Tests

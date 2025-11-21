@@ -22,8 +22,8 @@ struct SegmentedGaugeLevels: Equatable {
 
     // MARK: - Methods
 
-    func displayMarker(at index: Int, isMarker: Bool) -> Bool {
-        return isMarker && index == self.currentLevel
+    func displayMarker(at index: Int, withMarker: Bool) -> Bool {
+        return withMarker && index == self.currentLevel
     }
 
     func isPlainSegment(at index: Int) -> Bool {
