@@ -2,7 +2,7 @@
 //  SegmentedGaugeAccessibilitySortTests.swift
 //  SparkComponentSegmentedGaugeUnitTests
 //
-//  Created by robin.lemaire on 20/11/2025.
+//  Created by robin.lemaire on 21/11/2025.
 //  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
