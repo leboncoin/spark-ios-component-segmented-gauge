@@ -165,6 +165,7 @@ public struct SparkSegmentedGauge<TitleLabel, DescriptionLabel>: View where Titl
             self.titleLabel()
                 .font(self.viewModel.labelsStyle.titleTypography)
                 .foregroundStyle(self.viewModel.labelsStyle.color)
+                .accessibilitySort(.title)
 
             self.subContentStack {
 
@@ -176,27 +177,43 @@ public struct SparkSegmentedGauge<TitleLabel, DescriptionLabel>: View where Titl
                             let isPlainSegment = self.viewModel.levels.isPlainSegment(at: index)
 
                             // Segment
-                            RoundedRectangle(cornerRadius: self.viewModel.segmentBorder.radius)
-                                .fill(self.viewModel.colors.segmentBackground(isPlain: isPlainSegment).color)
-                                .sparkBorder(
-                                    width: self.viewModel.segmentBorder.width,
-                                    radius: self.viewModel.segmentBorder.radius,
-                                    colorToken: self.viewModel.colors.segmentBorder(isPlain: isPlainSegment),
-                                    position: .inner
-                                )
-                                .sparkFrame(
-                                    width: self.viewModel.sizes.segmentSize.width,
-                                    height: self.viewModel.sizes.segmentSize.height
-                                )
+                            Group {
+                                RoundedRectangle(cornerRadius: self.viewModel.segmentBorder.radius)
+                                    .fill(.white)
+
+                                RoundedRectangle(cornerRadius: self.viewModel.segmentBorder.radius)
+                                    .fill(self.viewModel.colors.segmentBackground(isPlain: isPlainSegment).color)
+                                    .sparkBorder(
+                                        self.viewModel.segmentBorder,
+                                        colors: self.viewModel.colors,
+                                        isPlainSegment: isPlainSegment
+                                    )
+                                    .opacity(self.viewModel.colors.segmentOpacity(isPlain: isPlainSegment))
+                            }
+                            .sparkFrame(
+                                width: self.viewModel.sizes.segmentSize.width,
+                                height: self.viewModel.sizes.segmentSize.height
+                            )
 
                             // Is Marker
                             if self.viewModel.levels.displayMarker(at: index, isMarker: self.isMarker) {
+
+                                // Outer
+                                Group {
+                                    Circle()
+                                        .fill(.white)
+                                        .sparkCornerRadius(.infinity)
+
+                                    Circle()
+                                        .fill(self.viewModel.colors.markerOuterBackground.color)
+                                        .opacity(self.viewModel.colors.segmentOpacity(isPlain: isPlainSegment))
+                                        .scaleEffect(1.01)
+                                }
+                                .sparkFrame(size: self.viewModel.sizes.markerOuterSize)
+
+                                // Inner
                                 Circle()
                                     .fill(self.viewModel.colors.markerInnerBackground)
-                                    .sparkFrame(size: self.viewModel.sizes.markerOuterSize)
-
-                                Circle()
-                                    .fill(self.viewModel.colors.markerOuterBackground)
                                     .sparkFrame(size: self.viewModel.sizes.markerInnerSize)
                             }
                         }
@@ -204,11 +221,13 @@ public struct SparkSegmentedGauge<TitleLabel, DescriptionLabel>: View where Titl
                 }
                 .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
                 .accessibilityLabel(self.viewModel.levels.accessibilityLabel)
+                .accessibilitySort(.segments)
 
                 // Description
                 self.descriptionLabel()
                     .font(self.viewModel.labelsStyle.descriptionTypography)
                     .foregroundStyle(self.viewModel.labelsStyle.color)
+                    .accessibilitySort(.description)
             }
         }
         .accessibilityIdentifier(SegmentedGaugeAccessibilityIdentifier.view)
@@ -260,6 +279,30 @@ public struct SparkSegmentedGauge<TitleLabel, DescriptionLabel>: View where Titl
                 spacing: self.viewModel.layout.subContentSpacing,
                 content: content
             )
+        }
+    }
+}
+
+// MARK: - Extension
+
+private extension View {
+
+    @ViewBuilder
+    func sparkBorder(
+        _ border: SegmentedGaugeSegmentBorder,
+        colors: SegmentedGaugeColors,
+        isPlainSegment isPlain: Bool
+    ) -> some View {
+        // Border only if there is no opacity
+        if !colors.segmentIsOpacity(isPlain: isPlain) {
+            self.sparkBorder(
+                width: border.width,
+                radius: border.radius,
+                colorToken: colors.segmentBorder(isPlain: isPlain),
+                position: .inner
+            )
+        } else {
+            self
         }
     }
 }

@@ -2,183 +2,217 @@
 //  SegmentedGaugeColorsTests.swift
 //  SparkComponentSegmentedGaugeUnitTests
 //
-//  Created by robin.lemaire on 29/10/2025.
+//  Created by robot.lemaire on 20/11/2025.
 //  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
 import XCTest
 @testable import SparkComponentSegmentedGauge
 @_spi(SI_SPI) import SparkThemingTesting
+@_spi(SI_SPI) import SparkTheming
 
 final class SegmentedGaugeColorsTests: XCTestCase {
 
     // MARK: - Default Values Tests
 
-    func test_defaultInitializer_producesEqualInstances() {
-        XCTAssertEqual(SegmentedGaugeColors(), SegmentedGaugeColors())
-    }
-
-    // MARK: - Function Tests
-
-    func test_segmentBackground_withIsPlainTrue_returnsPlainSegmentBackground() {
-        // GIVEN
-        let plainColor = ColorTokenGeneratedMock.blue()
-        let otherColor = ColorTokenGeneratedMock.green()
-        let colors = SegmentedGaugeColors(
-            plainSegmentBackground: plainColor,
-            otherSegmentBackground: otherColor,
-            plainSegmentBorder: ColorTokenGeneratedMock.yellow(),
-            otherSegmentBorder: ColorTokenGeneratedMock.red(),
-            markerOuterBackground: ColorTokenGeneratedMock.orange(),
-            markerInnerBackground: ColorTokenGeneratedMock.purple()
-        )
-
-        // WHEN
-        let result = colors.segmentBackground(isPlain: true)
+    func test_defaultInitializer_setsDefaultColorTokens() {
+        // GIVEN / WHEN
+        let colors = SegmentedGaugeColors()
 
         // THEN
-        XCTAssertTrue(result.equals(plainColor))
+        XCTAssertTrue(colors.plainSegmentBackground is ColorTokenClear)
+        XCTAssertTrue(colors.otherSegmentBackground is ColorTokenClear)
+        XCTAssertTrue(colors.plainSegmentBorder is ColorTokenClear)
+        XCTAssertTrue(colors.otherSegmentBorder is ColorTokenClear)
+        XCTAssertTrue(colors.markerOuterBackground is ColorTokenClear)
+        XCTAssertTrue(colors.markerInnerBackground is ColorTokenClear)
+        XCTAssertEqual(colors.plainSegmentOpacity, 0.0)
     }
 
-    func test_segmentBackground_withIsPlainFalse_returnsOtherSegmentBackground() {
+    // MARK: - Segment Background Tests
+
+    func test_segmentBackground_whenIsPlainTrue_returnsPlainSegmentBackground() {
         // GIVEN
-        let plainColor = ColorTokenGeneratedMock.blue()
-        let otherColor = ColorTokenGeneratedMock.green()
-        let colors = SegmentedGaugeColors(
-            plainSegmentBackground: plainColor,
-            otherSegmentBackground: otherColor,
-            plainSegmentBorder: ColorTokenGeneratedMock.yellow(),
-            otherSegmentBorder: ColorTokenGeneratedMock.red(),
-            markerOuterBackground: ColorTokenGeneratedMock.orange(),
-            markerInnerBackground: ColorTokenGeneratedMock.purple()
-        )
+        let colors = SegmentedGaugeColors()
 
         // WHEN
-        let result = colors.segmentBackground(isPlain: false)
+        let background = colors.segmentBackground(isPlain: true)
 
         // THEN
-        XCTAssertTrue(result.equals(otherColor))
+        XCTAssertTrue(background.equals(colors.plainSegmentBackground))
     }
 
-    func test_segmentBorder_withIsPlainTrue_returnsPlainSegmentBorder() {
+    func test_segmentBackground_whenIsPlainFalse_returnsOtherSegmentBackground() {
         // GIVEN
-        let plainBorderColor = ColorTokenGeneratedMock.yellow()
-        let otherBorderColor = ColorTokenGeneratedMock.red()
-        let colors = SegmentedGaugeColors(
-            plainSegmentBackground: ColorTokenGeneratedMock.blue(),
-            otherSegmentBackground: ColorTokenGeneratedMock.green(),
-            plainSegmentBorder: plainBorderColor,
-            otherSegmentBorder: otherBorderColor,
-            markerOuterBackground: ColorTokenGeneratedMock.orange(),
-            markerInnerBackground: ColorTokenGeneratedMock.purple()
-        )
+        let colors = SegmentedGaugeColors()
 
         // WHEN
-        let result = colors.segmentBorder(isPlain: true)
+        let background = colors.segmentBackground(isPlain: false)
 
         // THEN
-        XCTAssertTrue(result.equals(plainBorderColor))
+        XCTAssertTrue(background.equals(colors.otherSegmentBackground))
     }
 
-    func test_segmentBorder_withIsPlainFalse_returnsOtherSegmentBorder() {
+    // MARK: - Segment Border Tests
+
+    func test_segmentBorder_whenIsPlainTrue_returnsPlainSegmentBorder() {
         // GIVEN
-        let plainBorderColor = ColorTokenGeneratedMock.yellow()
-        let otherBorderColor = ColorTokenGeneratedMock.red()
-        let colors = SegmentedGaugeColors(
-            plainSegmentBackground: ColorTokenGeneratedMock.blue(),
-            otherSegmentBackground: ColorTokenGeneratedMock.green(),
-            plainSegmentBorder: plainBorderColor,
-            otherSegmentBorder: otherBorderColor,
-            markerOuterBackground: ColorTokenGeneratedMock.orange(),
-            markerInnerBackground: ColorTokenGeneratedMock.purple()
-        )
+        let colors = SegmentedGaugeColors()
 
         // WHEN
-        let result = colors.segmentBorder(isPlain: false)
+        let border = colors.segmentBorder(isPlain: true)
 
         // THEN
-        XCTAssertTrue(result.equals(otherBorderColor))
+        XCTAssertTrue(border.equals(colors.plainSegmentBorder))
     }
 
-    func test_segmentBackground_behaviorConsistency() {
+    func test_segmentBorder_whenIsPlainFalse_returnsOtherSegmentBorder() {
         // GIVEN
-        let colors = SegmentedGaugeColors(
-            plainSegmentBackground: ColorTokenGeneratedMock.blue(),
-            otherSegmentBackground: ColorTokenGeneratedMock.green(),
-            plainSegmentBorder: ColorTokenGeneratedMock.yellow(),
-            otherSegmentBorder: ColorTokenGeneratedMock.red(),
-            markerOuterBackground: ColorTokenGeneratedMock.orange(),
-            markerInnerBackground: ColorTokenGeneratedMock.purple()
-        )
+        let colors = SegmentedGaugeColors()
 
-        // WHEN / THEN
-        XCTAssertTrue(colors.segmentBackground(isPlain: true).equals(colors.plainSegmentBackground))
-        XCTAssertTrue(colors.segmentBackground(isPlain: false).equals(colors.otherSegmentBackground))
-        XCTAssertFalse(colors.segmentBackground(isPlain: true).equals(colors.segmentBackground(isPlain: false)))
+        // WHEN
+        let border = colors.segmentBorder(isPlain: false)
+
+        // THEN
+        XCTAssertTrue(border.equals(colors.otherSegmentBorder))
     }
 
-    func test_segmentBorder_behaviorConsistency() {
-        // GIVEN
-        let colors = SegmentedGaugeColors(
-            plainSegmentBackground: ColorTokenGeneratedMock.blue(),
-            otherSegmentBackground: ColorTokenGeneratedMock.green(),
-            plainSegmentBorder: ColorTokenGeneratedMock.yellow(),
-            otherSegmentBorder: ColorTokenGeneratedMock.red(),
-            markerOuterBackground: ColorTokenGeneratedMock.orange(),
-            markerInnerBackground: ColorTokenGeneratedMock.purple()
-        )
+    // MARK: - Segment Opacity Tests
 
-        // WHEN / THEN
-        XCTAssertTrue(colors.segmentBorder(isPlain: true).equals(colors.plainSegmentBorder))
-        XCTAssertTrue(colors.segmentBorder(isPlain: false).equals(colors.otherSegmentBorder))
-        XCTAssertFalse(colors.segmentBorder(isPlain: true).equals(colors.segmentBorder(isPlain: false)))
+    func test_segmentOpacity_whenIsPlainTrue_returnsPlainSegmentOpacity() {
+        // GIVEN
+        var colors = SegmentedGaugeColors()
+        colors.plainSegmentOpacity = 0.5
+
+        // WHEN
+        let opacity = colors.segmentOpacity(isPlain: true)
+
+        // THEN
+        XCTAssertEqual(opacity, 0.5)
+    }
+
+    func test_segmentOpacity_whenIsPlainFalse_returnsOne() {
+        // GIVEN
+        let colors = SegmentedGaugeColors()
+
+        // WHEN
+        let opacity = colors.segmentOpacity(isPlain: false)
+
+        // THEN
+        XCTAssertEqual(opacity, 1.0)
+    }
+
+    // MARK: - Segment Is Opacity Tests
+
+    func test_segmentIsOpacity_whenPlainOpacityLessThanOne_returnsTrue() {
+        // GIVEN
+        var colors = SegmentedGaugeColors()
+        colors.plainSegmentOpacity = 0.5
+
+        // WHEN
+        let isOpacity = colors.segmentIsOpacity(isPlain: true)
+
+        // THEN
+        XCTAssertTrue(isOpacity)
+    }
+
+    func test_segmentIsOpacity_whenPlainOpacityEqualsOne_returnsFalse() {
+        // GIVEN
+        var colors = SegmentedGaugeColors()
+        colors.plainSegmentOpacity = 1.0
+
+        // WHEN
+        let isOpacity = colors.segmentIsOpacity(isPlain: true)
+
+        // THEN
+        XCTAssertFalse(isOpacity)
+    }
+
+    func test_segmentIsOpacity_whenIsPlainFalse_returnsFalse() {
+        // GIVEN
+        let colors = SegmentedGaugeColors()
+
+        // WHEN
+        let isOpacity = colors.segmentIsOpacity(isPlain: false)
+
+        // THEN
+        XCTAssertFalse(isOpacity)
     }
 
     // MARK: - Equatable Tests
 
-    func test_equality_whenTokensMatch() {
-        // GIVEN / THEN
-        let lhs = SegmentedGaugeColors(
-            plainSegmentBackground: ColorTokenGeneratedMock.blue(),
-            otherSegmentBackground: ColorTokenGeneratedMock.green(),
-            plainSegmentBorder: ColorTokenGeneratedMock.yellow(),
-            otherSegmentBorder: ColorTokenGeneratedMock.red(),
-            markerOuterBackground: ColorTokenGeneratedMock.orange(),
-            markerInnerBackground: ColorTokenGeneratedMock.purple()
-        )
-        let rhs = SegmentedGaugeColors(
-            plainSegmentBackground: ColorTokenGeneratedMock.blue(),
-            otherSegmentBackground: ColorTokenGeneratedMock.green(),
-            plainSegmentBorder: ColorTokenGeneratedMock.yellow(),
-            otherSegmentBorder: ColorTokenGeneratedMock.red(),
-            markerOuterBackground: ColorTokenGeneratedMock.orange(),
-            markerInnerBackground: ColorTokenGeneratedMock.purple()
-        )
+    func test_equality_whenAllPropertiesMatch() {
+        // GIVEN
+        let lhs = SegmentedGaugeColors()
+        let rhs = SegmentedGaugeColors()
 
-        // THEN
+        // WHEN / THEN
         XCTAssertEqual(lhs, rhs)
     }
 
-    func test_inequality_whenTokensDiffer() {
-        // GIVEN / THEN
-        let lhs = SegmentedGaugeColors(
-            plainSegmentBackground: ColorTokenGeneratedMock.blue(),
-            otherSegmentBackground: ColorTokenGeneratedMock.green(),
-            plainSegmentBorder: ColorTokenGeneratedMock.yellow(),
-            otherSegmentBorder: ColorTokenGeneratedMock.red(),
-            markerOuterBackground: ColorTokenGeneratedMock.orange(),
-            markerInnerBackground: ColorTokenGeneratedMock.purple()
-        )
-        let rhs = SegmentedGaugeColors(
-            plainSegmentBackground: ColorTokenGeneratedMock.random(),
-            otherSegmentBackground: ColorTokenGeneratedMock.random(),
-            plainSegmentBorder: ColorTokenGeneratedMock.random(),
-            otherSegmentBorder: ColorTokenGeneratedMock.random(),
-            markerOuterBackground: ColorTokenGeneratedMock.random(),
-            markerInnerBackground: ColorTokenGeneratedMock.random()
-        )
+    func test_inequality_whenPlainSegmentBackgroundDiffers() {
+        // GIVEN
+        var lhs = SegmentedGaugeColors()
+        var rhs = SegmentedGaugeColors()
+        lhs.plainSegmentBackground = ColorTokenGeneratedMock.red()
+        rhs.plainSegmentBackground = ColorTokenGeneratedMock.blue()
 
-        // THEN
+        // WHEN / THEN
+        XCTAssertNotEqual(lhs, rhs)
+    }
+
+    func test_inequality_whenOtherSegmentBackgroundDiffers() {
+        // GIVEN
+        var lhs = SegmentedGaugeColors()
+        var rhs = SegmentedGaugeColors()
+        lhs.otherSegmentBackground = ColorTokenGeneratedMock.red()
+        rhs.otherSegmentBackground = ColorTokenGeneratedMock.blue()
+
+        // WHEN / THEN
+        XCTAssertNotEqual(lhs, rhs)
+    }
+
+    func test_inequality_whenPlainSegmentBorderDiffers() {
+        // GIVEN
+        var lhs = SegmentedGaugeColors()
+        var rhs = SegmentedGaugeColors()
+        lhs.plainSegmentBorder = ColorTokenGeneratedMock.red()
+        rhs.plainSegmentBorder = ColorTokenGeneratedMock.blue()
+
+        // WHEN / THEN
+        XCTAssertNotEqual(lhs, rhs)
+    }
+
+    func test_inequality_whenOtherSegmentBorderDiffers() {
+        // GIVEN
+        var lhs = SegmentedGaugeColors()
+        var rhs = SegmentedGaugeColors()
+        lhs.otherSegmentBorder = ColorTokenGeneratedMock.red()
+        rhs.otherSegmentBorder = ColorTokenGeneratedMock.blue()
+
+        // WHEN / THEN
+        XCTAssertNotEqual(lhs, rhs)
+    }
+
+    func test_inequality_whenMarkerOuterBackgroundDiffers() {
+        // GIVEN
+        var lhs = SegmentedGaugeColors()
+        var rhs = SegmentedGaugeColors()
+        lhs.markerOuterBackground = ColorTokenGeneratedMock.red()
+        rhs.markerOuterBackground = ColorTokenGeneratedMock.blue()
+
+        // WHEN / THEN
+        XCTAssertNotEqual(lhs, rhs)
+    }
+
+    func test_inequality_whenMarkerInnerBackgroundDiffers() {
+        // GIVEN
+        var lhs = SegmentedGaugeColors()
+        var rhs = SegmentedGaugeColors()
+        lhs.markerInnerBackground = ColorTokenGeneratedMock.red()
+        rhs.markerInnerBackground = ColorTokenGeneratedMock.blue()
+
+        // WHEN / THEN
         XCTAssertNotEqual(lhs, rhs)
     }
 }

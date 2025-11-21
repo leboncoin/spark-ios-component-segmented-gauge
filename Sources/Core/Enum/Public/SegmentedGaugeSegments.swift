@@ -14,7 +14,7 @@ public enum SegmentedGaugeSegments: CaseIterable {
     // MARK: - Properties
 
     /// The default case. Equals to **.medium**.
-    static var `default`: Self = .five
+    public static let `default`: Self = .five
 
     /// Get the maximum number of segments
     static var max: Int {

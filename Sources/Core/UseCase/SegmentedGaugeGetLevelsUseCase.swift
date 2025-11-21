@@ -37,7 +37,7 @@ final class SegmentedGaugeGetLevelsUseCase: SegmentedGaugeGetLevelsUseCaseable {
             case .low: 2
             case .veryLow: 1
             case .noData: 0
-            case .custom(let level, _): level.validated(for: levels)
+            case .custom(let level, _, _): level.validated(for: levels)
             }
 
         case .five:
@@ -48,7 +48,7 @@ final class SegmentedGaugeGetLevelsUseCase: SegmentedGaugeGetLevelsUseCaseable {
             case .low: 2
             case .veryLow: 1
             case .noData: 0
-            case .custom(let level, _): level.validated(for: levels)
+            case .custom(let level, _, _): level.validated(for: levels)
             }
         }
 

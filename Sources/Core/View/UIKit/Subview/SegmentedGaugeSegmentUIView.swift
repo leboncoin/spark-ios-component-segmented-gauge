@@ -181,6 +181,9 @@ final class SegmentedGaugeSegmentUIView: UIView {
 
         // Update Borders
         self.updateBorderRadius()
+
+        // Set opacity
+        self.alpha = self.colors.segmentOpacity(isPlain: isPlain)
     }
 
     private func setSegmentBorder() {

@@ -42,8 +42,16 @@ final class SegmentedGaugeTypeTests: XCTestCase {
         let color = ColorTokenGeneratedMock.blue()
 
         // WHEN
-        let lhs = SegmentedGaugeType.custom(level: 2, colorToken: color)
-        let rhs = SegmentedGaugeType.custom(level: 2, colorToken: color)
+        let lhs = SegmentedGaugeType.custom(
+            level: 2,
+            colorToken: color,
+            dim: 0.4
+        )
+        let rhs = SegmentedGaugeType.custom(
+            level: 2,
+            colorToken: color,
+            dim: 0.4
+        )
 
         // THEN
         XCTAssertEqual(lhs, rhs)
@@ -53,11 +61,13 @@ final class SegmentedGaugeTypeTests: XCTestCase {
         // GIVEN / WHEN
         let lhs = SegmentedGaugeType.custom(
             level: 2,
-            colorToken: ColorTokenGeneratedMock.blue()
+            colorToken: ColorTokenGeneratedMock.blue(),
+            dim: 0.5
         )
         let rhs = SegmentedGaugeType.custom(
             level: 2,
-            colorToken: ColorTokenGeneratedMock.orange()
+            colorToken: ColorTokenGeneratedMock.orange(),
+            dim: 0.5
         )
 
         // THEN
@@ -70,11 +80,32 @@ final class SegmentedGaugeTypeTests: XCTestCase {
 
         let lhs = SegmentedGaugeType.custom(
             level: 1,
-            colorToken: color
+            colorToken: color,
+            dim: 0.5
         )
         let rhs = SegmentedGaugeType.custom(
             level: 3,
-            colorToken: color
+            colorToken: color,
+            dim: 0.5
+        )
+
+        // THEN
+        XCTAssertNotEqual(lhs, rhs)
+    }
+
+    func test_custom_inequality_whenDimDiffers() {
+        // GIVEN / WHEN
+        let color = ColorTokenGeneratedMock.blue()
+
+        let lhs = SegmentedGaugeType.custom(
+            level: 1,
+            colorToken: color,
+            dim: 0.4
+        )
+        let rhs = SegmentedGaugeType.custom(
+            level: 1,
+            colorToken: color,
+            dim: 0.6
         )
 
         // THEN

@@ -93,7 +93,7 @@ public final class SparkUISegmentedGauge: UIView {
     ///
     /// Please **do not set a text/attributedText** in this label but use
     /// the ``title`` and ``attributedTitle`` directly on the ``SparkUISegmentedGauge``.
-    private var  titleLabel: UILabel = {
+    public private(set) var titleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.lineBreakMode = .byTruncatingTail
@@ -135,7 +135,11 @@ public final class SparkUISegmentedGauge: UIView {
         }
     }()
 
-    private var descriptionLabel: UILabel = {
+    /// The UILabel used to display the segmented gauge description.
+    ///
+    /// Please **do not set a text/attributedText** in this label but use
+    /// the ``descriptionString`` and ``attributedDescription`` directly on the ``SparkUISegmentedGauge``.
+    public private(set) var descriptionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.lineBreakMode = .byTruncatingTail
@@ -469,8 +473,8 @@ public final class SparkUISegmentedGauge: UIView {
 
         self.accessibilityLabel = [
             self.titleLabel.text,
-            levels.accessibilityLabel,
-            self.descriptionLabel.text
+            self.descriptionLabel.text,
+            levels.accessibilityLabel
         ].compactMap { $0 }.joined(separator: " ")
     }
 

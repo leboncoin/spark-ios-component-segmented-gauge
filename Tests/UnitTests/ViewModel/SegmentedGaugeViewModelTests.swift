@@ -62,6 +62,7 @@ final class SegmentedGaugeViewModelTests: XCTestCase {
             expectedNumberOfCalls: 1,
             givenTheme: stub.givenTheme,
             givenType: stub.givenType,
+            givenSegments: stub.givenSegments,
             expectedReturnValue: stub.expectedColors
         )
 
@@ -126,6 +127,7 @@ final class SegmentedGaugeViewModelTests: XCTestCase {
             expectedNumberOfCalls: 1,
             givenTheme: newTheme,
             givenType: stub.givenType,
+            givenSegments: stub.givenSegments,
             expectedReturnValue: stub.expectedColors
         )
 
@@ -208,6 +210,15 @@ final class SegmentedGaugeViewModelTests: XCTestCase {
         // THEN
         XCTAssertEqualToExpected(on: stub)
 
+        SegmentedGaugeGetColorsUseCaseableMockTest.XCTAssert(
+            stub.getColorsUseCaseMock,
+            expectedNumberOfCalls: 1,
+            givenTheme: stub.givenTheme,
+            givenType: stub.givenType,
+            givenSegments: newSegments,
+            expectedReturnValue: stub.expectedColors
+        )
+
         SegmentedGaugeGetLevelsUseCaseableMockTest.XCTAssert(
             stub.getLevelsUseCaseMock,
             expectedNumberOfCalls: 1,
@@ -218,7 +229,6 @@ final class SegmentedGaugeViewModelTests: XCTestCase {
 
         XCTAssertNotCalled(
             on: stub,
-            getColorsUseCase: true,
             getLabelsStyleUseCase: true,
             getLayoutUseCase: true,
             getSegmentBorderUseCase: true,
@@ -280,6 +290,7 @@ final class SegmentedGaugeViewModelTests: XCTestCase {
             expectedNumberOfCalls: 1,
             givenTheme: stub.givenTheme,
             givenType: newType,
+            givenSegments: stub.givenSegments,
             expectedReturnValue: stub.expectedColors
         )
 
@@ -413,7 +424,7 @@ private final class Stub {
 
     init() {
         let getColorsUseCaseMock = SegmentedGaugeGetColorsUseCaseableGeneratedMock()
-        getColorsUseCaseMock.executeWithThemeAndTypeReturnValue = self.expectedColors
+        getColorsUseCaseMock.executeWithThemeAndTypeAndSegmentsReturnValue = self.expectedColors
 
         let getLabelsStyleUseCaseMock = SegmentedGaugeGetLabelsStyleUseCaseableGeneratedMock()
         getLabelsStyleUseCaseMock.executeWithThemeReturnValue = self.expectedLabelsStyle
@@ -485,7 +496,7 @@ private func XCTAssertNotCalled(
 ) {
     SegmentedGaugeGetColorsUseCaseableMockTest.XCTCalled(
         stub.getColorsUseCaseMock,
-        executeWithThemeAndTypeCalled: !getColorsUseCase
+        executeWithThemeAndTypeAndSegmentsCalled: !getColorsUseCase
     )
 
     SegmentedGaugeGetLabelsStyleUseCaseableMockTest.XCTCalled(

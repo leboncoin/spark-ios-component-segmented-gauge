@@ -106,7 +106,7 @@ final class SegmentedGaugeGetLevelsUseCaseTests: XCTestCase {
         // GIVEN
         let segments = SegmentedGaugeSegments.three
         let colorToken = ColorTokenGeneratedMock.blue()
-        let type = SegmentedGaugeType.custom(level: 2, colorToken: colorToken)
+        let type = SegmentedGaugeType.custom(level: 2, colorToken: colorToken, dim: 1)
 
         let expectedLevels = SegmentedGaugeLevels(currentLevel: 2, levels: 3)
 
@@ -121,7 +121,7 @@ final class SegmentedGaugeGetLevelsUseCaseTests: XCTestCase {
         // GIVEN
         let segments = SegmentedGaugeSegments.three
         let colorToken = ColorTokenGeneratedMock.blue()
-        let type = SegmentedGaugeType.custom(level: 5, colorToken: colorToken)
+        let type = SegmentedGaugeType.custom(level: 5, colorToken: colorToken, dim: 0.4)
 
         let expectedLevels = SegmentedGaugeLevels(currentLevel: 3, levels: 3)
 
@@ -136,7 +136,7 @@ final class SegmentedGaugeGetLevelsUseCaseTests: XCTestCase {
         // GIVEN
         let segments = SegmentedGaugeSegments.three
         let colorToken = ColorTokenGeneratedMock.blue()
-        let type = SegmentedGaugeType.custom(level: -1, colorToken: colorToken)
+        let type = SegmentedGaugeType.custom(level: -1, colorToken: colorToken, dim: 0.1)
 
         let expectedLevels = SegmentedGaugeLevels(currentLevel: 0, levels: 3)
 
@@ -237,7 +237,7 @@ final class SegmentedGaugeGetLevelsUseCaseTests: XCTestCase {
         // GIVEN
         let segments = SegmentedGaugeSegments.five
         let colorToken = ColorTokenGeneratedMock.blue()
-        let type = SegmentedGaugeType.custom(level: 4, colorToken: colorToken)
+        let type = SegmentedGaugeType.custom(level: 4, colorToken: colorToken, dim: 0.4)
 
         let expectedLevels = SegmentedGaugeLevels(currentLevel: 4, levels: 5)
 
@@ -252,7 +252,7 @@ final class SegmentedGaugeGetLevelsUseCaseTests: XCTestCase {
         // GIVEN
         let segments = SegmentedGaugeSegments.five
         let colorToken = ColorTokenGeneratedMock.blue()
-        let type = SegmentedGaugeType.custom(level: 8, colorToken: colorToken)
+        let type = SegmentedGaugeType.custom(level: 8, colorToken: colorToken, dim: 0.4)
 
         let expectedLevels = SegmentedGaugeLevels(currentLevel: 5, levels: 5)
 
@@ -267,7 +267,7 @@ final class SegmentedGaugeGetLevelsUseCaseTests: XCTestCase {
         // GIVEN
         let segments = SegmentedGaugeSegments.five
         let colorToken = ColorTokenGeneratedMock.blue()
-        let type = SegmentedGaugeType.custom(level: -2, colorToken: colorToken)
+        let type = SegmentedGaugeType.custom(level: -2, colorToken: colorToken, dim: 0.4)
 
         let expectedLevels = SegmentedGaugeLevels(currentLevel: 0, levels: 5)
 

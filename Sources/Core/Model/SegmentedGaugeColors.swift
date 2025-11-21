@@ -7,6 +7,7 @@
 //
 
 @_spi(SI_SPI) import SparkTheming
+import Foundation
 
 struct SegmentedGaugeColors: Equatable {
 
@@ -21,6 +22,8 @@ struct SegmentedGaugeColors: Equatable {
     var markerOuterBackground: any ColorToken = ColorTokenClear()
     var markerInnerBackground: any ColorToken = ColorTokenClear()
 
+    var plainSegmentOpacity: CGFloat = .zero
+
     // MARK: - Methods
 
     func segmentBackground(isPlain: Bool) -> any ColorToken {
@@ -29,6 +32,14 @@ struct SegmentedGaugeColors: Equatable {
 
     func segmentBorder(isPlain: Bool) -> any ColorToken {
         return isPlain ? self.plainSegmentBorder : self.otherSegmentBorder
+    }
+
+    func segmentIsOpacity(isPlain: Bool) -> Bool {
+        return self.segmentOpacity(isPlain: isPlain) < 1.0
+    }
+
+    func segmentOpacity(isPlain: Bool) -> CGFloat {
+        return isPlain ? self.plainSegmentOpacity : 1.0
     }
 
     // MARK: - Equatable
