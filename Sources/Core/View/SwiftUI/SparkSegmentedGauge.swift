@@ -176,11 +176,27 @@ public struct SparkSegmentedGauge<TitleLabel, DescriptionLabel>: View where Titl
 
                             let isPlainSegment = self.viewModel.levels.isPlainSegment(at: index)
 
-                            // Segment
-                            Group {
-                                RoundedRectangle(cornerRadius: self.viewModel.segmentBorder.radius)
-                                    .fill(.white)
+                            // With Marker ?
+                            if self.viewModel.levels.displayMarker(at: index, withMarker: self.withMarker) {
 
+                                // Segment with marker
+                                SegmentedGaugeMarkedSegmentView(
+                                    markerSize: self.viewModel.sizes.markerOuterSize
+                                )
+                                .fill(self.viewModel.colors.markerOuterBackground)
+                                .opacity(self.viewModel.colors.segmentOpacity(isPlain: isPlainSegment))
+                                .sparkFrame(
+                                    width: self.viewModel.sizes.segmentSize.width,
+                                    height: self.viewModel.sizes.segmentSize.height
+                                )
+
+                                // Inner Circle
+                                Circle()
+                                    .fill(self.viewModel.colors.markerInnerBackground)
+                                    .sparkFrame(size: self.viewModel.sizes.markerInnerSize)
+
+                            } else {
+                                // Segment without marker
                                 RoundedRectangle(cornerRadius: self.viewModel.segmentBorder.radius)
                                     .fill(self.viewModel.colors.segmentBackground(isPlain: isPlainSegment).color)
                                     .sparkBorder(
@@ -188,33 +204,11 @@ public struct SparkSegmentedGauge<TitleLabel, DescriptionLabel>: View where Titl
                                         colors: self.viewModel.colors,
                                         isPlainSegment: isPlainSegment
                                     )
+                                    .sparkFrame(
+                                        width: self.viewModel.sizes.segmentSize.width,
+                                        height: self.viewModel.sizes.segmentSize.height
+                                    )
                                     .opacity(self.viewModel.colors.segmentOpacity(isPlain: isPlainSegment))
-                            }
-                            .sparkFrame(
-                                width: self.viewModel.sizes.segmentSize.width,
-                                height: self.viewModel.sizes.segmentSize.height
-                            )
-
-                            // Is Marker
-                            if self.viewModel.levels.displayMarker(at: index, withMarker: self.withMarker) {
-
-                                // Outer
-                                Group {
-                                    Circle()
-                                        .fill(.white)
-                                        .sparkCornerRadius(.infinity)
-
-                                    Circle()
-                                        .fill(self.viewModel.colors.markerOuterBackground.color)
-                                        .opacity(self.viewModel.colors.segmentOpacity(isPlain: isPlainSegment))
-                                        .scaleEffect(1.01)
-                                }
-                                .sparkFrame(size: self.viewModel.sizes.markerOuterSize)
-
-                                // Inner
-                                Circle()
-                                    .fill(self.viewModel.colors.markerInnerBackground)
-                                    .sparkFrame(size: self.viewModel.sizes.markerInnerSize)
                             }
                         }
                     }
