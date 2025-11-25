@@ -55,6 +55,32 @@ public enum SegmentedGaugeType: Equatable {
     /// The default case. Equals to **.noData**.
     public static let `default`: Self = .noData
 
+    // MARK: - Methods
+
+    /// The raw value depends fo ``SegmentedGaugeSegments``
+    func rawValue(segments: SegmentedGaugeSegments = .default) -> Int {
+        return switch segments {
+        case .three:
+            switch self {
+            case .veryHigh, .high, .medium: 3
+            case .low: 2
+            case .veryLow: 1
+            case .noData: 0
+            case .custom(let level, _, _): level
+            }
+        case .five:
+            switch self {
+            case .veryHigh: 5
+            case .high: 4
+            case .medium: 3
+            case .low: 2
+            case .veryLow: 1
+            case .noData: 0
+            case .custom(let level, _, _): level
+            }
+        }
+    }
+
     // MARK: - Equatable
 
     public static func == (lhs: SegmentedGaugeType, rhs: SegmentedGaugeType) -> Bool {
