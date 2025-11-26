@@ -23,6 +23,12 @@ final class SegmentedGaugeViewModelTests: XCTestCase {
         let stub = Stub()
 
         // THEN
+        XCTAssertNil(stub.viewModel.theme)
+        XCTAssertNil(stub.viewModel.alignment)
+        XCTAssertNil(stub.viewModel.segments)
+        XCTAssertNil(stub.viewModel.size)
+        XCTAssertNil(stub.viewModel.type)
+
         XCTAssertEqualToExpected(
             on: stub,
             otherColors: SegmentedGaugeColors(),
@@ -359,6 +365,35 @@ final class SegmentedGaugeViewModelTests: XCTestCase {
         viewModel.segments = stub.givenSegments
         viewModel.size = stub.givenSize
         viewModel.type = stub.givenType
+
+        // THEN
+        XCTAssertEqualToExpected(on: stub)
+
+        XCTAssertNotCalled(
+            on: stub,
+            getColorsUseCase: true,
+            getLabelsStyleUseCase: true,
+            getLayoutUseCase: true,
+            getLevelsUseCase: true,
+            getSegmentBorderUseCase: true,
+            getSizesUseCase: true
+        )
+    }
+
+    func test_propertiesChanged_for_nil_shouldNotCallUseCases() {
+        // GIVEN
+        let stub = Stub()
+        let viewModel = stub.viewModel
+
+        viewModel.setup(stub: stub)
+        stub.resetMockedData()
+
+        // WHEN
+        viewModel.theme = nil
+        viewModel.alignment = nil
+        viewModel.segments = nil
+        viewModel.size = nil
+        viewModel.type = nil
 
         // THEN
         XCTAssertEqualToExpected(on: stub)
