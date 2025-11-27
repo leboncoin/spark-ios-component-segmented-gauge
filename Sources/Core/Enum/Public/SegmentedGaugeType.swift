@@ -55,6 +55,24 @@ public enum SegmentedGaugeType: Equatable {
     /// The default case. Equals to **.noData**.
     public static let `default`: Self = .noData
 
+    // MARK: - Initialization
+
+    /// Init the ``SegmentedGaugeType`` from a rawValue.
+    /// - Parameters:
+    ///   - rawValue: The int rawValue.
+    ///   If the value is **lower than 0**, the type is equals to **.noData**.
+    ///   If the value is **greater than 4**, the type is equals to **.veryHigh**.
+    init(rawValue: Int) {
+        self = switch rawValue {
+        case 1: .veryLow
+        case 2: .low
+        case 3: .medium
+        case 4: .high
+        case 5...: .veryHigh
+        default: .noData
+        }
+    }
+
     // MARK: - Methods
 
     /// The raw value depends fo ``SegmentedGaugeSegments``
