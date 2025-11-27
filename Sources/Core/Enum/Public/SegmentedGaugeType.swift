@@ -62,7 +62,7 @@ public enum SegmentedGaugeType: Equatable {
     ///   - rawValue: The int rawValue.
     ///   If the value is **lower than 0**, the type is equals to **.noData**.
     ///   If the value is **greater than 4**, the type is equals to **.veryHigh**.
-    init(rawValue: Int) {
+    public init(rawValue: Int) {
         self = switch rawValue {
         case 1: .veryLow
         case 2: .low
