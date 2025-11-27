@@ -21,6 +21,72 @@ final class SegmentedGaugeTypeTests: XCTestCase {
         )
     }
 
+    // MARK: - Initialization Tests
+
+    func test_init_rawValue_veryLow() {
+        // WHEN
+        let result = SegmentedGaugeType(rawValue: 1)
+
+        // THEN
+        XCTAssertEqual(result, .veryLow)
+    }
+
+    func test_init_rawValue_low() {
+        // WHEN
+        let result = SegmentedGaugeType(rawValue: 2)
+
+        // THEN
+        XCTAssertEqual(result, .low)
+    }
+
+    func test_init_rawValue_medium() {
+        // WHEN
+        let result = SegmentedGaugeType(rawValue: 3)
+
+        // THEN
+        XCTAssertEqual(result, .medium)
+    }
+
+    func test_init_rawValue_high() {
+        // WHEN
+        let result = SegmentedGaugeType(rawValue: 4)
+
+        // THEN
+        XCTAssertEqual(result, .high)
+    }
+
+    func test_init_rawValue_veryHigh() {
+        // WHEN
+        let result = SegmentedGaugeType(rawValue: 5)
+
+        // THEN
+        XCTAssertEqual(result, .veryHigh)
+    }
+
+    func test_init_rawValue_veryHigh_largeValue() {
+        // WHEN
+        let result = SegmentedGaugeType(rawValue: 10)
+
+        // THEN
+        XCTAssertEqual(result, .veryHigh)
+    }
+
+    func test_init_rawValue_noData_zero() {
+        // WHEN
+        let result = SegmentedGaugeType(rawValue: 0)
+
+        // THEN
+        XCTAssertEqual(result, .noData)
+    }
+
+    func test_init_rawValue_noData_negativeValue() {
+        // WHEN
+        let result = SegmentedGaugeType(rawValue: -1)
+
+        // THEN
+        XCTAssertEqual(result, .noData)
+    }
+
     // MARK: - RawValue Tests
 
     func test_rawValue_fiveSegments_standardCases() {
